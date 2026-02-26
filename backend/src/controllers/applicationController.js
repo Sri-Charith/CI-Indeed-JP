@@ -13,6 +13,7 @@ exports.applyToJob = async (req, res) => {
             resume_url,
             cover_letter,
             degree,
+            branch,
             university,
             experience_years,
             current_company
@@ -43,6 +44,7 @@ exports.applyToJob = async (req, res) => {
             resume_url,
             cover_letter,
             degree,
+            branch,
             university,
             experience_years,
             current_company
@@ -90,7 +92,7 @@ exports.getJobApplications = async (req, res) => {
         const applications = await Application.find({ job_id: req.params.jobId })
             .populate({
                 path: 'user_id',
-                select: 'first_name last_name email phone location_city degree specialization experience_years university graduation_year current_company skills',
+                select: 'first_name last_name email phone location_city degree branch specialization experience_years university graduation_year current_company skills',
                 populate: {
                     path: 'skills',
                     select: 'skill_name'

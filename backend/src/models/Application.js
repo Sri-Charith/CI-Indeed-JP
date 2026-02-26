@@ -27,6 +27,7 @@ const applicationSchema = new mongoose.Schema({
     },
     // Snapshot fields to capture user state at application time
     degree: String,
+    branch: String,
     university: String,
     experience_years: { type: Number, default: 0 },
     current_company: String

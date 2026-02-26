@@ -18,6 +18,7 @@ const Jobs = () => {
         resume_url: '',
         cover_letter: '',
         degree: '',
+        branch: '',
         university: '',
         experience_years: '',
         current_company: ''
@@ -73,6 +74,7 @@ const Jobs = () => {
                 ...prev,
                 resume_url: data.resume_url || '',
                 degree: data.degree || '',
+                branch: data.branch || '',
                 university: data.university || '',
                 experience_years: data.experience_years || '',
                 current_company: data.current_company || ''
@@ -110,7 +112,7 @@ const Jobs = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-10">
             {/* Search Header */}
             <div className="mb-12">
                 <h1 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Find your dream job today</h1>
@@ -259,7 +261,7 @@ const Jobs = () => {
             {/* Application Modal */}
             <AnimatePresence>
                 {showModal && selectedJob && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
@@ -299,6 +301,16 @@ const Jobs = () => {
                                             placeholder="e.g. Master in CS"
                                             value={applicationForm.degree}
                                             onChange={(e) => setApplicationForm({ ...applicationForm, degree: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 text-left">Branch / Dept</label>
+                                        <input
+                                            required
+                                            className="input-field text-left py-2 px-3"
+                                            placeholder="e.g. Computer Science"
+                                            value={applicationForm.branch}
+                                            onChange={(e) => setApplicationForm({ ...applicationForm, branch: e.target.value })}
                                         />
                                     </div>
                                     <div>

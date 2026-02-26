@@ -56,6 +56,10 @@
   box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
 }
 
+.shadow-glow-dark {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
 /* Button System */
 .btn-premium {
   position: relative;

@@ -44,7 +44,7 @@ const UserApplications = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
             <div className="mb-10 text-center md:text-left">
                 <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Application Status</h1>
                 <p className="text-lg text-slate-500 mt-2">Track your progress and updates from recruiters</p>
