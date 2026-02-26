@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 
 // Generate Token
 const generateToken = (id, role) => {
@@ -22,15 +21,12 @@ exports.registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const password_hash = await bcrypt.hash(password, salt);
-
         const user = await User.create({
             first_name,
             last_name,
             email,
             phone,
-            password_hash,
+            password, // Hashed by pre-save hook
             location_city
         });
 
@@ -55,7 +51,7 @@ exports.loginUser = async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
-        if (user && (await bcrypt.compare(password, user.password_hash))) {
+        if (user && (await user.matchPassword(password))) {
             res.json({
                 _id: user._id,
                 name: `${user.first_name} ${user.last_name}`,
@@ -72,7 +68,7 @@ exports.loginUser = async (req, res) => {
 
 // @desc    Register a new admin
 // @route   POST /api/auth/admin/signup
-// @access  Public (Should be protected or internal usually, but keeping public for setup)
+// @access  Public
 exports.registerAdmin = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -82,13 +78,10 @@ exports.registerAdmin = async (req, res) => {
             return res.status(400).json({ message: 'Admin already exists' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const password_hash = await bcrypt.hash(password, salt);
-
         const admin = await Admin.create({
             name,
             email,
-            password_hash
+            password // Hashed by pre-save hook
         });
 
         if (admin) {
@@ -112,7 +105,7 @@ exports.loginAdmin = async (req, res) => {
         const { email, password } = req.body;
         const admin = await Admin.findOne({ email });
 
-        if (admin && (await bcrypt.compare(password, admin.password_hash))) {
+        if (admin && (await admin.matchPassword(password))) {
             res.json({
                 _id: admin._id,
                 name: admin.name,
@@ -126,3 +119,75 @@ exports.loginAdmin = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// @desc    Get user profile
+// @route   GET /api/auth/user/profile
+// @access  Private
+exports.getProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select('-password');
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Update user profile
+// @route   PUT /api/auth/user/profile
+// @access  Private
+exports.updateProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (user) {
+            const fieldsToUpdate = [
+                'first_name', 'last_name', 'phone', 'location_city', 'location_state',
+                'country', 'degree', 'branch', 'specialization', 'university',
+                'graduation_year', 'experience_years', 'current_company',
+                'current_salary', 'expected_salary', 'resume_url', 'linkedin_url', 'skills'
+            ];
+
+            fieldsToUpdate.forEach(field => {
+                if (req.body[field] !== undefined) {
+                    user[field] = req.body[field];
+                }
+            });
+
+            if (req.body.password) {
+                user.password = req.body.password;
+            }
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                first_name: updatedUser.first_name,
+                last_name: updatedUser.last_name,
+                name: `${updatedUser.first_name} ${updatedUser.last_name}`,
+                email: updatedUser.email,
+                phone: updatedUser.phone,
+                location_city: updatedUser.location_city,
+                degree: updatedUser.degree,
+                branch: updatedUser.branch,
+                specialization: updatedUser.specialization,
+                university: updatedUser.university,
+                graduation_year: updatedUser.graduation_year,
+                experience_years: updatedUser.experience_years,
+                current_company: updatedUser.current_company,
+                skills: updatedUser.skills,
+                token: generateToken(updatedUser._id, 'user'),
+            });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Update Profile Error:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+

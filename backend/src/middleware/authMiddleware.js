@@ -18,10 +18,10 @@ const protect = async (req, res, next) => {
 
             // Add user/admin from payload to request
             if (decoded.role === 'admin') {
-                req.user = await Admin.findById(decoded.id).select('-password_hash');
+                req.user = await Admin.findById(decoded.id).select('-password');
                 req.role = 'admin';
             } else {
-                req.user = await User.findById(decoded.id).select('-password_hash');
+                req.user = await User.findById(decoded.id).select('-password');
                 req.role = 'user';
             }
 

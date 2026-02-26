@@ -1,12 +1,22 @@
 const Application = require('../models/Application');
 const Job = require('../models/Job');
+const User = require('../models/User');
+const Skill = require('../models/Skill');
 
 // @desc    Apply for a job
 // @route   POST /api/applications
 // @access  Private/User
 exports.applyToJob = async (req, res) => {
     try {
-        const { job_id, resume_url, cover_letter } = req.body;
+        const {
+            job_id,
+            resume_url,
+            cover_letter,
+            degree,
+            university,
+            experience_years,
+            current_company
+        } = req.body;
 
         // Check if job exists and is open
         const job = await Job.findById(job_id);
@@ -31,7 +41,11 @@ exports.applyToJob = async (req, res) => {
             job_id,
             user_id: req.user._id,
             resume_url,
-            cover_letter
+            cover_letter,
+            degree,
+            university,
+            experience_years,
+            current_company
         });
 
         res.status(201).json(application);
@@ -72,9 +86,19 @@ exports.getJobApplications = async (req, res) => {
             return res.status(404).json({ message: 'Job not found' });
         }
 
+        console.log('Fetching applications for jobId:', req.params.jobId);
         const applications = await Application.find({ job_id: req.params.jobId })
-            .populate('user_id', 'first_name last_name email phone location_city degree specialization experience_years')
+            .populate({
+                path: 'user_id',
+                select: 'first_name last_name email phone location_city degree specialization experience_years university graduation_year current_company skills',
+                populate: {
+                    path: 'skills',
+                    select: 'skill_name'
+                }
+            })
             .sort({ createdAt: -1 });
+
+        console.log(`Found ${applications.length} applications`);
 
         res.json(applications);
     } catch (error) {
@@ -115,7 +139,7 @@ exports.getApplicationById = async (req, res) => {
     try {
         const application = await Application.findById(req.params.id)
             .populate('job_id')
-            .populate('user_id', '-password_hash');
+            .populate('user_id', '-password');
 
         if (!application) {
             return res.status(404).json({ message: 'Application not found' });

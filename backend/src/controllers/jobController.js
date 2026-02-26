@@ -1,5 +1,6 @@
 const Job = require('../models/Job');
 const Company = require('../models/Company');
+const Skill = require('../models/Skill');
 
 // @desc    Create a new job
 // @route   POST /api/jobs
@@ -142,8 +143,25 @@ exports.deleteJob = async (req, res) => {
 // @access  Private/Admin
 exports.getAdminJobs = async (req, res) => {
     try {
-        const jobs = await Job.find({ posted_by_admin_id: req.user._id })
-            .sort({ createdAt: -1 });
+        const mongoose = require('mongoose');
+        const jobs = await Job.aggregate([
+            { $match: { posted_by_admin_id: new mongoose.Types.ObjectId(req.user._id) } },
+            {
+                $lookup: {
+                    from: 'applications',
+                    localField: '_id',
+                    foreignField: 'job_id',
+                    as: 'applications'
+                }
+            },
+            {
+                $addFields: {
+                    applicationCount: { $size: '$applications' }
+                }
+            },
+            { $project: { applications: 0 } },
+            { $sort: { createdAt: -1 } }
+        ]);
         res.json(jobs);
     } catch (error) {
         res.status(500).json({ message: error.message });

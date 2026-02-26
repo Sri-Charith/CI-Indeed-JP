@@ -8,6 +8,14 @@ const connectDB = require('./config/db');
 // Connect to Database
 connectDB();
 
+// Register Models
+require('./models/User');
+require('./models/Admin');
+require('./models/Job');
+require('./models/Application');
+require('./models/Company');
+require('./models/Skill');
+
 const app = express();
 
 // Middleware

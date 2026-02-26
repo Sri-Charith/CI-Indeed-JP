@@ -24,7 +24,12 @@ const applicationSchema = new mongoose.Schema({
     applied_at: {
         type: Date,
         default: Date.now
-    }
+    },
+    // Snapshot fields to capture user state at application time
+    degree: String,
+    university: String,
+    experience_years: { type: Number, default: 0 },
+    current_company: String
 }, { timestamps: true });
 
 // Prevent duplicate applications for the same job by the same user
