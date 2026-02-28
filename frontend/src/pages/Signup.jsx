@@ -3,7 +3,6 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/axios';
 import { User, Mail, Phone, Lock, Sparkles, AlertCircle, Loader2, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import logo from '../logo-centennial.png';
 
 const Signup = () => {
     const [searchParams] = useSearchParams();
@@ -118,9 +117,6 @@ const Signup = () => {
                     {/* Right Panel: Form */}
                     <div className="p-8 md:p-16">
                         <div className="mb-10 flex flex-col items-center lg:items-start">
-                            <Link to="/" className="lg:hidden mb-8">
-                                <img src={logo} alt="Centennial Talent Solutions" className="h-14 w-auto drop-shadow-lg" />
-                            </Link>
                             <h2 className="text-4xl font-black text-slate-900 tracking-tight">Create Account</h2>
                             <p className="text-slate-500 mt-2 font-medium">Enter your details to get started</p>
                         </div>

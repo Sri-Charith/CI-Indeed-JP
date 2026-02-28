@@ -19,7 +19,6 @@ import heroBg from '../assets/hero-bg.png';
 import aiMatching from '../assets/ai-matching.png';
 import recruiterView from '../assets/recruiter-view.png';
 
-import logo from '../logo-centennial.png';
 import whatsappLogo from '../assets/contact/whatsapp.png';
 import mailLogo from '../assets/contact/mail.png';
 import callLogo from '../assets/contact/call.png';
@@ -83,15 +82,6 @@ const Landing = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                     <div className="grid lg:grid-cols-2 gap-8 items-center">
                         <div className="max-w-3xl">
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8 }}
-                                className="mb-8"
-                            >
-                                <img src={logo} alt="Centennial Talent Solutions Logo" className="h-28 md:h-36 w-auto drop-shadow-2xl" />
-                            </motion.div>
-
                             <motion.h1
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}

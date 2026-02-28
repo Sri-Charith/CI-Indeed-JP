@@ -187,11 +187,7 @@ const JobDetail = () => {
 
                             <div className="flex flex-col md:flex-row md:items-center gap-8">
                                 <div className="w-24 h-24 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                    {job.company_logo ? (
-                                        <img src={job.company_logo} alt={job.company_name} className="w-16 h-16 object-contain" />
-                                    ) : (
-                                        <Building2 className="w-12 h-12 text-primary-600" />
-                                    )}
+                                    <Building2 className="w-12 h-12 text-primary-600" />
                                 </div>
                                 <div>
                                     <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight mb-2">

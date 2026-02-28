@@ -195,11 +195,7 @@ const Jobs = () => {
                                             <div className="flex flex-start justify-between">
                                                 <div className="flex gap-5">
                                                     <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100">
-                                                        {job.company_logo ? (
-                                                            <img src={job.company_logo} alt={job.company_name} className="w-10 h-10 object-contain" />
-                                                        ) : (
-                                                            <Briefcase className="w-7 h-7 text-primary-600" />
-                                                        )}
+                                                        <Briefcase className="w-7 h-7 text-primary-600" />
                                                     </div>
                                                     <div className="text-left">
                                                         <Link to={`/jobs/${job._id}`} className="block">

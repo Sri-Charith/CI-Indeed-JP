@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { Mail, Lock, AlertCircle, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import logo from '../logo-centennial.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -49,9 +48,6 @@ const Login = () => {
                 className="max-w-md w-full relative z-10"
             >
                 <div className="text-center mb-10">
-                    <Link to="/" className="inline-block mb-8">
-                        <img src={logo} alt="Centennial Talent Solutions" className="h-20 w-auto drop-shadow-xl" />
-                    </Link>
                     <h2 className="text-4xl font-black text-slate-900 tracking-tight">Welcome Back</h2>
                     <p className="text-slate-500 mt-3 font-medium">Log in to your account with Centennial Talent Solutions</p>
                 </div>
