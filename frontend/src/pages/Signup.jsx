@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/axios';
 import { User, Mail, Phone, Lock, Sparkles, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import logo from '../logo-centennial.png';
 
 const Signup = () => {
-    const [role, setRole] = useState('user'); // 'user' (Job Seeker) or 'admin' (Recruiter)
+    const [searchParams] = useSearchParams();
+    const initialRole = searchParams.get('role') === 'admin' ? 'admin' : 'user';
+    const [role, setRole] = useState(initialRole); // 'user' (Job Seeker) or 'admin' (Recruiter)
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -81,7 +83,7 @@ const Signup = () => {
                             </h2>
                             <p className="text-white/80 text-lg mb-12 leading-relaxed font-medium">
                                 {role === 'user'
-                                    ? "Join Centennial Infotech's elite network of tech professionals and get hired by global innovators."
+                                    ? "Join Centennial Talent Solutions' elite network of tech professionals and get hired by global innovators."
                                     : "Connect with pre-vetted senior talent and streamline your entire hiring pipeline with AI."}
                             </p>
 
@@ -108,7 +110,7 @@ const Signup = () => {
 
                         <div className="relative z-10 mt-12 pt-8 border-t border-white/10">
                             <p className="text-white/60 text-sm font-bold uppercase tracking-widest leading-none">Powered by</p>
-                            <span className="text-xl font-black text-white mt-2 block">Centennial <span className="text-accent-cyan">Infotech</span></span>
+                            <span className="text-xl font-black text-white mt-2 block">Centennial <span className="text-accent-cyan">Talent Solutions</span></span>
                         </div>
                     </div>
 
@@ -116,7 +118,7 @@ const Signup = () => {
                     <div className="p-8 md:p-16">
                         <div className="mb-10 flex flex-col items-center lg:items-start">
                             <Link to="/" className="lg:hidden mb-8">
-                                <img src={logo} alt="Centennial Infotech" className="h-14 w-auto drop-shadow-lg" />
+                                <img src={logo} alt="Centennial Talent Solutions" className="h-14 w-auto drop-shadow-lg" />
                             </Link>
                             <h2 className="text-4xl font-black text-slate-900 tracking-tight">Create Account</h2>
                             <p className="text-slate-500 mt-2 font-medium">Enter your details to get started</p>

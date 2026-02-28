@@ -36,8 +36,8 @@ const Navbar = () => {
                     <div className="flex justify-between h-16 items-center">
                         <div className="flex items-center">
                             <Link to="/" className="flex items-center group space-x-3">
-                                <img src={logo} alt="Centennial Infotech" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
-                                <span className="text-xl font-black tracking-tight text-slate-900 hidden sm:block">Centennial <span className="text-primary-600">Infotech</span></span>
+                                <img src={logo} alt="Centennial Talent Solutions" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
+                                <span className="text-xl font-black tracking-tight text-slate-900 hidden sm:block">Centennial <span className="text-primary-600">Talent Solutions</span></span>
                             </Link>
                         </div>
 

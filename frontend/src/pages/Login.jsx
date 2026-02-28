@@ -49,10 +49,10 @@ const Login = () => {
             >
                 <div className="text-center mb-10">
                     <Link to="/" className="inline-block mb-8">
-                        <img src={logo} alt="Centennial Infotech" className="h-20 w-auto drop-shadow-xl" />
+                        <img src={logo} alt="Centennial Talent Solutions" className="h-20 w-auto drop-shadow-xl" />
                     </Link>
                     <h2 className="text-4xl font-black text-slate-900 tracking-tight">Welcome Back</h2>
-                    <p className="text-slate-500 mt-3 font-medium">Log in to your account with Centennial Infotech</p>
+                    <p className="text-slate-500 mt-3 font-medium">Log in to your account with Centennial Talent Solutions</p>
                 </div>
 
                 <div className="glass shadow-premium rounded-[2.5rem] p-10 relative overflow-hidden">

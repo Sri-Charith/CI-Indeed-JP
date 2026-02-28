@@ -72,75 +72,76 @@ const Landing = () => {
     return (
         <div className="overflow-x-hidden pt-16">
             {/* Hero Section */}
-            <section className="relative min-h-[90vh] flex items-center pt-20 pb-32 overflow-hidden">
-                {/* Visual Background - Clear and unobstructed */}
-                <div className="absolute top-0 right-[-5%] w-[60%] h-full z-0 pointer-events-none">
-                    <img
-                        src={heroBg}
-                        alt="Network Visual"
-                        className="w-full h-full object-contain animate-float opacity-100"
-                    />
-                </div>
-
+            <section className="relative min-h-[85vh] flex items-center pt-20 pb-16 overflow-hidden">
                 {/* Glow effects pushed further back */}
                 <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary-200/20 rounded-full blur-[150px] z-[-1]"></div>
                 <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-accent-blue/10 rounded-full blur-[150px] z-[-1]"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                    <div className="max-w-3xl">
+                    <div className="grid lg:grid-cols-2 gap-8 items-center">
+                        <div className="max-w-3xl">
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="mb-8"
+                            >
+                                <img src={logo} alt="Centennial Talent Solutions Logo" className="h-28 md:h-36 w-auto drop-shadow-2xl" />
+                            </motion.div>
+
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                                className="text-6xl md:text-8xl font-black text-slate-900 leading-[1.05] mb-6 tracking-tighter"
+                            >
+                                Connect with <br />
+                                <span className="text-gradient">Elite Talent</span> <br />
+                                Instantly.
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                                className="text-xl text-slate-500 mb-10 leading-relaxed max-w-xl font-medium"
+                            >
+                                AI-driven hiring platform by Centennial Talent Solutions.
+                                Skip the noise and find your perfect match in minutes, not months.
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.5 }}
+                                className="flex flex-col sm:flex-row items-center gap-6"
+                            >
+                                <Link to="/jobs" className="w-full sm:w-auto btn-premium btn-premium-primary text-lg px-10 group">
+                                    Explore Careers
+                                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                                <Link to="/signup?role=admin" className="w-full sm:w-auto btn-premium btn-premium-outline text-lg px-10">
+                                    Hire Top Talent
+                                </Link>
+                            </motion.div>
+                        </div>
+
+                        {/* Hero Image Section - Separate from text on large screens */}
                         <motion.div
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="mb-10"
+                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.3 }}
+                            className="relative mt-16 lg:mt-0"
                         >
-                            <img src={logo} alt="Centennial Infotech Logo" className="h-28 md:h-36 w-auto drop-shadow-2xl" />
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="inline-flex items-center space-x-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-primary-700 text-sm font-bold mb-8 shadow-sm"
-                        >
-                            <span className="flex h-2 w-2 rounded-full bg-primary-500 animate-pulse"></span>
-                            <span>The Future of Tech Recruitment is Here</span>
-                        </motion.div>
-
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.3 }}
-                            className="text-6xl md:text-8xl font-black text-slate-900 leading-[1.05] mb-8 tracking-tighter"
-                        >
-                            Connect with <br />
-                            <span className="text-gradient">Elite Talent</span> <br />
-                            Instantly.
-                        </motion.h1>
-
-                        <motion.p
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
-                            className="text-xl text-slate-500 mb-12 leading-relaxed max-w-xl font-medium"
-                        >
-                            AI-driven hiring platform by Centennial Infotech.
-                            Skip the noise and find your perfect match in minutes, not months.
-                        </motion.p>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                            className="flex flex-col sm:flex-row items-center gap-6"
-                        >
-                            <Link to="/jobs" className="w-full sm:w-auto btn-premium btn-premium-primary text-lg px-10 group">
-                                Explore Careers
-                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                            <Link to="/signup" className="w-full sm:w-auto btn-premium btn-premium-outline text-lg px-10">
-                                Hire Top Talent
-                            </Link>
+                            <div className="relative z-10 w-full max-w-2xl mx-auto">
+                                <img
+                                    src={heroBg}
+                                    alt="Network Visual"
+                                    className="w-full h-auto object-contain animate-float drop-shadow-[0_20px_50px_rgba(79,70,229,0.2)]"
+                                />
+                            </div>
+                            {/* Decorative glow behind image */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-primary-400/20 blur-[120px] rounded-full z-0"></div>
                         </motion.div>
                     </div>
                 </div>
@@ -261,7 +262,7 @@ const Landing = () => {
                             </div>
                             <h2 className="text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter">Stay in control of your <span className="text-accent-cyan">hiring pipeline</span></h2>
                             <p className="text-slate-400 text-lg mb-10 leading-relaxed font-medium">Manage thousands of applications with ease. Our dashboard provides real-time insights into candidate engagement and hiring metrics.</p>
-                            <Link to="/signup" className="btn-premium btn-premium-primary !bg-white !text-slate-900 shadow-xl group">
+                            <Link to="/signup?role=admin" className="btn-premium btn-premium-primary !bg-white !text-slate-900 shadow-xl group">
                                 Start Hiring Now
                                 <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
@@ -363,7 +364,7 @@ const Landing = () => {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
                         <div>
                             <div className="flex items-center space-x-2 mb-6 justify-center md:justify-start">
-                                <span className="text-2xl font-black tracking-tight text-slate-900">Centennial <span className="text-primary-600">Infotech</span></span>
+                                <span className="text-2xl font-black tracking-tight text-slate-900">Centennial <span className="text-primary-600">Talent Solutions</span></span>
                             </div>
                             <p className="text-slate-400 max-w-xs font-medium">Empowering the world's best tech teams with intelligent recruitment solutions.</p>
                         </div>
@@ -373,7 +374,7 @@ const Landing = () => {
                                 <h4 className="font-bold text-slate-900 uppercase text-xs tracking-widest">Product</h4>
                                 <ul className="text-slate-500 space-y-2 text-sm font-bold">
                                     <li><Link to="/jobs" className="hover:text-primary-600">Find Jobs</Link></li>
-                                    <li><Link to="/signup" className="hover:text-primary-600">Hire Talent</Link></li>
+                                    <li><Link to="/signup?role=admin" className="hover:text-primary-600">Hire Talent</Link></li>
                                     <li><a href="#" className="hover:text-primary-600">AI Screening</a></li>
                                 </ul>
                             </div>
@@ -390,7 +391,7 @@ const Landing = () => {
                                         <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">
                                             <span className="text-xs">@</span>
                                         </div>
-                                        <a href="mailto:support@centennialinfotech.com" className="hover:text-primary-600 transition-colors">support@centennialinfotech.com</a>
+                                        <a href="mailto:support@centennialtalent.com" className="hover:text-primary-600 transition-colors">support@centennialtalent.com</a>
                                     </li>
                                     <li className="flex items-center group">
                                         <div className="w-8 h-8 bg-slate-50 text-slate-600 rounded-lg flex items-center justify-center mr-3 group-hover:bg-slate-900 group-hover:text-white transition-all">
@@ -406,7 +407,7 @@ const Landing = () => {
                         </div>
                     </div>
                     <div className="mt-20 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-bold gap-4">
-                        <p>© 2026 Centennial Infotech. Built with ❤️ in the future.</p>
+                        <p>© 2026 Centennial Talent Solutions. Connecting talent to the future</p>
                         <div className="flex items-center space-x-6 uppercase tracking-widest">
                             <a href="#" className="hover:text-slate-900 transition-colors">Twitter</a>
                             <a href="#" className="hover:text-slate-900 transition-colors">LinkedIn</a>
