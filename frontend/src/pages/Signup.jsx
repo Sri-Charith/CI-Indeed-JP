@@ -84,13 +84,13 @@ const Signup = () => {
                             <p className="text-white/80 text-lg mb-12 leading-relaxed font-medium">
                                 {role === 'user'
                                     ? "Join Centennial Talent Solutions' elite network of tech professionals and get hired by global innovators."
-                                    : "Connect with pre-vetted senior talent and streamline your entire hiring pipeline with AI."}
+                                    : "Connect with pre-vetted senior talent and streamline your entire hiring pipeline with our platform."}
                             </p>
 
                             <div className="space-y-6">
                                 {(role === 'user'
-                                    ? ["Personalized AI job matching", "Direct outreach from top firms", "Real-time application tracking"]
-                                    : ["Access to pre-vetted talent", "Smart applicant ranking", "Automated interview scheduling"]
+                                    ? ["Tailored career opportunities", "Direct outreach from top firms", "Real-time application tracking"]
+                                    : ["Access to pre-vetted talent", "Advanced talent selection", "Automated interview scheduling"]
                                 ).map((text, i) => (
                                     <motion.div
                                         key={i}

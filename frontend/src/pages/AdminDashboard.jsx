@@ -21,7 +21,8 @@ const AdminDashboard = () => {
         salary_max: '',
         job_type: 'full-time',
         work_mode: 'onsite',
-        status: 'open'
+        status: 'open',
+        role: 'Software Development'
     });
     const [editingJob, setEditingJob] = useState(null);
 
@@ -69,7 +70,8 @@ const AdminDashboard = () => {
                 salary_max: '',
                 job_type: 'full-time',
                 work_mode: 'onsite',
-                status: 'open'
+                status: 'open',
+                role: 'Software Development'
             });
         } catch (err) {
             alert(editingJob ? 'Failed to update job' : 'Failed to post job');
@@ -92,7 +94,8 @@ const AdminDashboard = () => {
             salary_max: job.salary_max,
             job_type: job.job_type,
             work_mode: job.work_mode,
-            status: job.status
+            status: job.status,
+            role: job.role || 'Software Development'
         });
         setShowModal(true);
     };
@@ -161,7 +164,8 @@ const AdminDashboard = () => {
                             salary_max: '',
                             job_type: 'full-time',
                             work_mode: 'onsite',
-                            status: 'open'
+                            status: 'open',
+                            role: 'Software Development'
                         });
                         setShowModal(true);
                     }}
@@ -347,6 +351,25 @@ const AdminDashboard = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="space-y-2 mt-6">
+                                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Job Role / Category</label>
+                                        <div className="relative group">
+                                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500 transition-colors">
+                                                <Briefcase className="w-5 h-5" />
+                                            </div>
+                                            <select
+                                                name="role"
+                                                value={formData.role}
+                                                required
+                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900 appearance-none"
+                                                onChange={handleChange}
+                                            >
+                                                {['UI/UX Design', 'Web Development', 'App Development', 'Quality Assurance', 'Software Development', 'IT Consulting'].map(role => (
+                                                    <option key={role} value={role}>{role}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </section>
 
                                 {/* Section 2: Details & Logistics */}
@@ -525,12 +548,13 @@ const AdminDashboard = () => {
                             </form>
                         </motion.div>
                     </div>
-                )}
-            </AnimatePresence>
+                )
+                }
+            </AnimatePresence >
 
 
             {/* Applications Modal */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {showAppsModal && (
                     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                         <motion.div
@@ -627,10 +651,10 @@ const AdminDashboard = () => {
                         </motion.div>
                     </div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
 
             {/* Detailed User Profile Modal */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {showProfileModal && selectedUser && (
                     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
                         <motion.div
@@ -652,9 +676,16 @@ const AdminDashboard = () => {
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-bold">{selectedUser.first_name} {selectedUser.last_name}</h2>
-                                        <p className="text-primary-100">{selectedUser.email}</p>
+                                        <div className="flex flex-col gap-1 mt-1">
+                                            <p className="text-primary-100 flex items-center gap-2">
+                                                <Mail className="w-4 h-4" /> {selectedUser.email}
+                                            </p>
+                                            <p className="text-primary-100 flex items-center gap-2">
+                                                <Phone className="w-4 h-4" /> {selectedUser.phone}
+                                            </p>
+                                        </div>
                                         <p className="text-sm mt-2 opacity-80 flex items-center gap-1">
-                                            <MapPin className="w-4 h-4" /> {selectedUser.location_city || 'Location Not Specified'}
+                                            <MapPin className="w-4 h-4" /> {selectedUser.location_city}{selectedUser.location_state ? `, ${selectedUser.location_state}` : ''}
                                         </p>
                                     </div>
                                 </div>
@@ -668,7 +699,9 @@ const AdminDashboard = () => {
                                     </h3>
                                     <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
                                         <p className="font-bold text-slate-900">{selectedUser.degree || 'No Degree Listed'}</p>
+                                        {selectedUser.specialization && <p className="text-sm text-primary-600 font-semibold">{selectedUser.specialization}</p>}
                                         <p className="text-sm text-slate-600">{selectedUser.university}</p>
+                                        {selectedUser.branch && <p className="text-xs text-slate-500 italic mt-1">{selectedUser.branch} Department</p>}
                                         {selectedUser.graduation_year && (
                                             <p className="text-xs text-slate-400 mt-1">Class of {selectedUser.graduation_year}</p>
                                         )}
@@ -683,6 +716,22 @@ const AdminDashboard = () => {
                                     <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
                                         <p className="font-bold text-slate-900">{selectedUser.experience_years} Years of Experience</p>
                                         <p className="text-sm text-slate-600">Current: {selectedUser.current_company || 'Not Specified'}</p>
+                                        {(selectedUser.current_salary || selectedUser.expected_salary) && (
+                                            <div className="mt-3 pt-3 border-t border-slate-200 flex gap-4">
+                                                {selectedUser.current_salary && (
+                                                    <div>
+                                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Current CTC</p>
+                                                        <p className="text-sm font-bold text-slate-700">₹{selectedUser.current_salary.toLocaleString()}</p>
+                                                    </div>
+                                                )}
+                                                {selectedUser.expected_salary && (
+                                                    <div>
+                                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Expected CTC</p>
+                                                        <p className="text-sm font-bold text-primary-600">₹{selectedUser.expected_salary.toLocaleString()}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </section>
 
@@ -704,26 +753,24 @@ const AdminDashboard = () => {
                                     </div>
                                 </section>
 
-                                <div className="pt-4 border-t border-slate-100 flex gap-4">
-                                    <a
-                                        href={`tel:${selectedUser.phone}`}
-                                        className="flex-1 btn-primary py-3 flex items-center justify-center gap-2 rounded-xl text-sm"
-                                    >
-                                        <Phone className="w-4 h-4" /> Phone
-                                    </a>
-                                    <a
-                                        href={`mailto:${selectedUser.email}`}
-                                        className="flex-1 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all font-bold py-3 flex items-center justify-center gap-2 rounded-xl text-sm"
-                                    >
-                                        <Mail className="w-4 h-4" /> Email
-                                    </a>
-                                </div>
+                                {selectedUser.linkedin_url && (
+                                    <div className="pt-4 border-t border-slate-100">
+                                        <a
+                                            href={selectedUser.linkedin_url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all font-bold py-3 flex items-center justify-center gap-2 rounded-xl text-sm"
+                                        >
+                                            <Globe className="w-4 h-4" /> LinkedIn Profile
+                                        </a>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     </div>
                 )}
-            </AnimatePresence>
-        </div>
+            </AnimatePresence >
+        </div >
     );
 };
 

@@ -201,6 +201,11 @@ const JobDetail = () => {
                                             {job.job_type.replace('-', ' ')}
                                         </p>
                                         <span className="text-slate-300 hidden md:inline">•</span>
+                                        <p className="text-slate-500 font-bold flex items-center">
+                                            <Building2 className="w-4 h-4 mr-2" />
+                                            {job.role}
+                                        </p>
+                                        <span className="text-slate-300 hidden md:inline">•</span>
                                         <p className="text-slate-400 text-sm font-medium flex items-center">
                                             <Calendar className="w-4 h-4 mr-2" />
                                             Posted {new Date(job.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}

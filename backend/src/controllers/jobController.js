@@ -8,7 +8,7 @@ const Skill = require('../models/Skill');
 exports.createJob = async (req, res) => {
     try {
         const {
-            job_id, title, company_id, company_name, description,
+            job_id, title, role, company_id, company_name, description,
             requirements, responsibilities, salary_min, salary_max,
             experience_required, job_type, work_mode, location_city,
             location_state, country, openings_count, application_deadline,
@@ -18,6 +18,7 @@ exports.createJob = async (req, res) => {
         const job = await Job.create({
             job_id,
             title,
+            role,
             company_id,
             company_name,
             posted_by_admin_id: req.user._id, // From auth middleware
@@ -49,7 +50,7 @@ exports.createJob = async (req, res) => {
 // @access  Public
 exports.getJobs = async (req, res) => {
     try {
-        const { keyword, location, job_type, work_mode } = req.query;
+        const { keyword, location, job_type, work_mode, role } = req.query;
 
         let query = { status: 'open' };
 
@@ -65,6 +66,7 @@ exports.getJobs = async (req, res) => {
         }
         if (job_type) query.job_type = job_type;
         if (work_mode) query.work_mode = work_mode;
+        if (role) query.role = role;
 
         const jobs = await Job.find(query)
             .populate('company_id', 'name logo')

@@ -75,14 +75,14 @@
 }
 
 .btn-premium-primary {
-  background: linear-gradient(135deg, var(--primary-indigo), #6366f1);
+  background: var(--primary-blue);
   color: white;
   border: none;
 }
 
 .btn-premium-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3), 0 0 15px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 58, 155, 0.3), 0 0 15px rgba(0, 58, 155, 0.2);
 }
 
 .btn-premium-outline {
@@ -93,8 +93,8 @@
 
 .btn-premium-outline:hover {
   background: var(--bg-slate);
-  border-color: var(--primary-indigo);
-  color: var(--primary-indigo);
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
   transform: translateY(-2px);
 }
 
@@ -130,14 +130,14 @@
 
 /* Gradient Text */
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary-indigo), var(--accent-blue));
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--primary-indigo));
+  background: linear-gradient(135deg, var(--accent-cyan), var(--primary-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

@@ -13,11 +13,18 @@ import {
     Star,
     ChevronRight,
     Globe,
-    ShieldCheck
+    ShieldCheck,
+    Layout,
+    Code2,
+    Smartphone,
+    Lightbulb,
+    Twitter,
+    Instagram,
+    Youtube
 } from 'lucide-react';
 import heroBg from '../assets/hero-bg.png';
-import aiMatching from '../assets/ai-matching.png';
 import recruiterView from '../assets/recruiter-view.png';
+import engineeringServices from '../assets/engineering-services.png';
 
 import whatsappLogo from '../assets/contact/whatsapp.png';
 import mailLogo from '../assets/contact/mail.png';
@@ -99,8 +106,8 @@ const Landing = () => {
                                 transition={{ duration: 0.8, delay: 0.4 }}
                                 className="text-xl text-slate-500 mb-10 leading-relaxed max-w-xl font-medium"
                             >
-                                AI-driven hiring platform by Centennial Talent Solutions.
-                                Skip the noise and find your perfect match in minutes, not months.
+                                Premium engineering services by Centennial Talent Solutions.
+                                From UI/UX to IT Consulting, we build the tech that powers the future.
                             </motion.p>
 
                             <motion.div
@@ -151,7 +158,7 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* AI Features Section */}
+            {/* Engineering Services Section */}
             <section className="py-32 bg-slate-50 relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row items-center gap-20">
@@ -163,52 +170,43 @@ const Landing = () => {
                             className="lg:w-1/2 relative"
                         >
                             <div className="absolute inset-0 bg-primary-400/20 blur-[100px] rounded-full"></div>
-                            <img src={aiMatching} alt="AI Matching" className="relative z-10 w-full rounded-[3rem] shadow-premium" />
+                            <img src={engineeringServices} alt="Engineering Services" className="relative z-10 w-full rounded-[3rem] shadow-premium" />
                             <div className="absolute -bottom-10 -right-10 glass p-6 rounded-3xl shadow-2xl z-20 animate-float max-w-[240px]">
                                 <div className="flex items-center space-x-3 mb-2">
-                                    <Cpu className="text-primary-600 w-6 h-6" />
-                                    <span className="font-bold text-sm">Smart Analysis</span>
+                                    <Star className="text-primary-600 w-6 h-6" />
+                                    <span className="font-bold text-sm">Industry Experts</span>
                                 </div>
-                                <p className="text-xs text-slate-500 font-medium">AI cross-references 50+ skills and cultural markers for perfect team fit.</p>
+                                <p className="text-xs text-slate-500 font-medium">Delivering excellence across diverse technology stacks and design paradigms.</p>
                             </div>
                         </motion.div>
 
                         <div className="lg:w-1/2">
-                            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-primary-600 mb-6">Cutting Edge Tech</h2>
-                            <h3 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter">Everything you need to <br /><span className="text-gradient">Automate</span> your hiring</h3>
+                            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-primary-600 mb-6">Our Core Specializations</h2>
+                            <h3 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter">End-to-end solutions for <br /><span className="text-gradient">Digital Success</span></h3>
 
-                            <div className="space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {[
-                                    {
-                                        icon: Zap,
-                                        title: "Predictive Matching",
-                                        desc: "Our AI doesn't just look at keywords. It analyzes career trajectories and project portfolios."
-                                    },
-                                    {
-                                        icon: Search,
-                                        title: "Instant Sourcing",
-                                        desc: "Instantly source candidates from our exclusive network of pre-vetted senior developers."
-                                    },
-                                    {
-                                        icon: FileText,
-                                        title: "Resume Intelligence",
-                                        desc: "Extract meaningful insights from resumes instantly, from tech stack depths to growth potential."
-                                    }
+                                    { icon: Layout, title: "UI/UX Design", desc: "Creating intuitive, user-centric interfaces." },
+                                    { icon: Code2, title: "Web Development", desc: "Scalable, high-performance web applications." },
+                                    { icon: Smartphone, title: "App Development", desc: "Native and cross-platform mobile solutions." },
+                                    { icon: ShieldCheck, title: "Quality Assurance", desc: "Rigorous testing and reliable deployments." },
+                                    { icon: Cpu, title: "Software Dev", desc: "Custom enterprise software and backends." },
+                                    { icon: Lightbulb, title: "IT Consulting", desc: "Strategic technology roadmap and advice." }
                                 ].map((item, idx) => (
                                     <motion.div
                                         key={idx}
-                                        initial={{ opacity: 0, x: 30 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.2 }}
-                                        className="flex items-start space-x-6"
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="flex items-start space-x-4"
                                     >
-                                        <div className="mt-1 flex-shrink-0 w-12 h-12 glass rounded-xl flex items-center justify-center text-primary-600">
-                                            <item.icon className="w-6 h-6" />
+                                        <div className="mt-1 flex-shrink-0 w-10 h-10 glass rounded-xl flex items-center justify-center text-primary-600">
+                                            <item.icon className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xl font-bold text-slate-900 mb-1">{item.title}</h4>
-                                            <p className="text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+                                            <h4 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h4>
+                                            <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.desc}</p>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -235,9 +233,9 @@ const Landing = () => {
                             delay={0.2}
                         />
                         <FeatureCard
-                            icon={Cpu}
-                            title="AI Screening"
-                            desc="Slash your time-to-hire by 70%. Our AI screens initial interviews so you only meet the top 2%."
+                            icon={Zap}
+                            title="Rapid Delivery"
+                            desc="Slash your time-to-market. Our streamlined workflows ensure high-quality software delivered on schedule."
                             delay={0.3}
                         />
                     </div>
@@ -280,7 +278,7 @@ const Landing = () => {
                             {
                                 name: "Alex Rivet",
                                 role: "VP of Engineering, CloudScale",
-                                text: "Centennial reduced our time-to-hire by 60%. The AI matching is scary accurate.",
+                                text: "Centennial reduced our time-to-hire by 60%. The candidate matching is extremely accurate.",
                                 avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
                             },
                             {
@@ -368,7 +366,7 @@ const Landing = () => {
                                 <ul className="text-slate-500 space-y-2 text-sm font-bold">
                                     <li><Link to="/jobs" className="hover:text-primary-600">Find Jobs</Link></li>
                                     <li><Link to="/signup?role=admin" className="hover:text-primary-600">Hire Talent</Link></li>
-                                    <li><a href="#" className="hover:text-primary-600">AI Screening</a></li>
+                                    <li><a href="#" className="hover:text-primary-600">IT Consulting</a></li>
                                 </ul>
                             </div>
                             <div className="space-y-4">
@@ -395,16 +393,35 @@ const Landing = () => {
                                             <a href="tel:+918146511568" className="hover:text-primary-600 transition-colors">+91-81465 11568</a>
                                         </div>
                                     </li>
+                                    <li className="flex items-center group pt-4 border-t border-slate-50">
+                                        <div className="flex space-x-4">
+                                            <a href="https://x.com/centennialits" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center bg-white shadow-sm hover:shadow-md hover:text-primary-600 transition-all">
+                                                <Twitter className="w-4 h-4" />
+                                            </a>
+                                            <a href="https://www.instagram.com/cententialinfotech" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center bg-white shadow-sm hover:shadow-md hover:text-primary-600 transition-all">
+                                                <Instagram className="w-4 h-4" />
+                                            </a>
+                                            <a href="https://www.youtube.com/@centennialinfotech" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center bg-white shadow-sm hover:shadow-md hover:text-primary-600 transition-all">
+                                                <Youtube className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div className="mt-20 pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-bold gap-4">
                         <p>© 2026 Centennial Talent Solutions. Connecting talent to the future</p>
-                        <div className="flex items-center space-x-6 uppercase tracking-widest">
-                            <a href="#" className="hover:text-slate-900 transition-colors">Twitter</a>
-                            <a href="#" className="hover:text-slate-900 transition-colors">LinkedIn</a>
-                            <a href="#" className="hover:text-slate-900 transition-colors">Discord</a>
+                        <div className="flex items-center space-x-6">
+                            <a href="https://x.com/centennialits" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
+                                <Twitter className="w-5 h-5" />
+                            </a>
+                            <a href="https://www.instagram.com/cententialinfotech" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                            <a href="https://www.youtube.com/@centennialinfotech" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
+                                <Youtube className="w-5 h-5" />
+                            </a>
                         </div>
                     </div>
                 </div>

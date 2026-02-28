@@ -10,6 +10,7 @@ const Jobs = () => {
     const [keyword, setKeyword] = useState('');
     const [location, setLocation] = useState('');
     const [jobType, setJobType] = useState('');
+    const [selectedRole, setSelectedRole] = useState('');
 
     // Application state
     const [selectedJob, setSelectedJob] = useState(null);
@@ -38,6 +39,7 @@ const Jobs = () => {
             if (keyword) params.append('keyword', keyword);
             if (location) params.append('location', location);
             if (jobType) params.append('job_type', jobType);
+            if (selectedRole) params.append('role', selectedRole);
 
             const { data } = await api.get(`/jobs?${params.toString()}`);
             setJobs(data);
@@ -50,7 +52,7 @@ const Jobs = () => {
 
     useEffect(() => {
         fetchJobs();
-    }, [jobType]);
+    }, [jobType, selectedRole]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -167,6 +169,29 @@ const Jobs = () => {
                             ))}
                         </div>
                     </div>
+
+                    <div>
+                        <h3 className="flex items-center text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">
+                            <Briefcase className="w-4 h-4 mr-2" />
+                            Job Category
+                        </h3>
+                        <div className="space-y-3">
+                            {['', 'UI/UX Design', 'Web Development', 'App Development', 'Quality Assurance', 'Software Development', 'IT Consulting'].map((cat) => (
+                                <label key={cat} className="flex items-center group cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="jobcategory"
+                                        checked={selectedRole === cat}
+                                        onChange={() => setSelectedRole(cat)}
+                                        className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-slate-300"
+                                    />
+                                    <span className="ml-3 text-slate-600 group-hover:text-primary-600">
+                                        {cat === '' ? 'All Categories' : cat}
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Job Listings Grid */}
@@ -201,7 +226,11 @@ const Jobs = () => {
                                                         <Link to={`/jobs/${job._id}`} className="block">
                                                             <h2 className="text-xl font-bold text-slate-900 group-hover:text-primary-600 transition-colors uppercase tracking-tight">{job.title}</h2>
                                                         </Link>
-                                                        <p className="text-primary-600 font-semibold">{job.company_name}</p>
+                                                        <div className="flex items-center gap-2">
+                                                            <p className="text-primary-600 font-semibold">{job.company_name}</p>
+                                                            <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                            <span className="text-slate-500 text-sm font-medium">{job.role}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-end">
