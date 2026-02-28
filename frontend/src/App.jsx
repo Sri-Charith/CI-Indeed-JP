@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserApplications from './pages/UserApplications';
 
 import Profile from './pages/Profile';
+import JobDetail from './pages/JobDetail';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/jobs/:id" element={<JobDetail />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
           <Route

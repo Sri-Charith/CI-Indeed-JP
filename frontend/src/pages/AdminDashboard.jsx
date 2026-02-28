@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import { Plus, Briefcase, Users, Eye, Edit, Trash2, Loader2, X, MapPin, DollarSign, Clock, GraduationCap, Phone, Mail, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -215,8 +216,10 @@ const AdminDashboard = () => {
                             <tbody className="divide-y divide-slate-50">
                                 {jobs.map((job) => (
                                     <tr key={job._id} className="hover:bg-slate-50/50 transition-colors">
-                                        <td className="px-6 py-5">
-                                            <p className="font-bold text-slate-900">{job.title}</p>
+                                        <td className="px-6 py-5 text-left">
+                                            <Link to={`/jobs/${job._id}`} className="hover:text-primary-600 transition-colors">
+                                                <p className="font-bold text-slate-900">{job.title}</p>
+                                            </Link>
                                             <p className="text-sm text-slate-400">{job.job_id}</p>
                                         </td>
                                         <td className="px-6 py-5">

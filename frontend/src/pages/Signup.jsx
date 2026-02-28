@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/axios';
-import { User, Mail, Phone, Lock, Sparkles, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
+import { User, Mail, Phone, Lock, Sparkles, AlertCircle, Loader2, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import logo from '../logo-centennial.png';
 
@@ -18,6 +18,7 @@ const Signup = () => {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -214,7 +215,7 @@ const Signup = () => {
                                         </div>
                                     </div>
                                 )}
-                                <div className="space-y-2">
+                                <div className="space-y-2 text-left">
                                     <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 text-left">Password</label>
                                     <div className="relative group">
                                         <div className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 group-focus-within:text-primary-600 text-slate-400">
@@ -222,12 +223,19 @@ const Signup = () => {
                                         </div>
                                         <input
                                             name="password"
-                                            type="password"
+                                            type={showPassword ? 'text' : 'password'}
                                             required
-                                            className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-medium"
+                                            className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-2xl py-4 pl-12 pr-12 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-medium"
                                             placeholder="••••••••"
                                             onChange={handleChange}
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-600 transition-colors duration-300"
+                                        >
+                                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                        </button>
                                     </div>
                                 </div>
                             </div>

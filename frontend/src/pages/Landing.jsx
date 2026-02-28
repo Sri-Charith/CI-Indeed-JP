@@ -20,6 +20,9 @@ import aiMatching from '../assets/ai-matching.png';
 import recruiterView from '../assets/recruiter-view.png';
 
 import logo from '../logo-centennial.png';
+import whatsappLogo from '../assets/contact/whatsapp.png';
+import mailLogo from '../assets/contact/mail.png';
+import callLogo from '../assets/contact/call.png';
 
 const StatCard = ({ value, label, index }) => {
     const controls = useAnimation();
@@ -382,20 +385,20 @@ const Landing = () => {
                                 <h4 className="font-bold text-slate-900 uppercase text-xs tracking-widest">Contact Us</h4>
                                 <ul className="text-slate-500 space-y-3 text-sm font-bold">
                                     <li className="flex items-center group">
-                                        <div className="w-8 h-8 bg-green-50 text-green-600 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">
-                                            <span className="text-xs">WA</span>
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-white shadow-sm overflow-hidden p-1 group-hover:shadow-md transition-all">
+                                            <img src={whatsappLogo} alt="WhatsApp" className="w-full h-full object-contain" />
                                         </div>
                                         <a href="https://wa.me/918146511568" className="hover:text-primary-600 transition-colors">+91 81465 11568</a>
                                     </li>
                                     <li className="flex items-center group">
-                                        <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                            <span className="text-xs">@</span>
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-white shadow-sm overflow-hidden p-1 group-hover:shadow-md transition-all">
+                                            <img src={mailLogo} alt="Mail" className="w-full h-full object-contain" />
                                         </div>
                                         <a href="mailto:support@centennialtalent.com" className="hover:text-primary-600 transition-colors">support@centennialtalent.com</a>
                                     </li>
                                     <li className="flex items-center group">
-                                        <div className="w-8 h-8 bg-slate-50 text-slate-600 rounded-lg flex items-center justify-center mr-3 group-hover:bg-slate-900 group-hover:text-white transition-all">
-                                            <span className="text-xs">PH</span>
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-white shadow-sm overflow-hidden p-1 group-hover:shadow-md transition-all">
+                                            <img src={callLogo} alt="Call" className="w-full h-full object-contain" />
                                         </div>
                                         <div className="flex flex-col">
                                             <a href="tel:+9101723596492" className="hover:text-primary-600 transition-colors">+91-01723596492</a>

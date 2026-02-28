@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
 import { Search, MapPin, Briefcase, DollarSign, Calendar, Filter, Loader2, ArrowRight, X, FileText, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -201,8 +201,10 @@ const Jobs = () => {
                                                             <Briefcase className="w-7 h-7 text-primary-600" />
                                                         )}
                                                     </div>
-                                                    <div>
-                                                        <h2 className="text-xl font-bold text-slate-900 group-hover:text-primary-600 transition-colors uppercase tracking-tight">{job.title}</h2>
+                                                    <div className="text-left">
+                                                        <Link to={`/jobs/${job._id}`} className="block">
+                                                            <h2 className="text-xl font-bold text-slate-900 group-hover:text-primary-600 transition-colors uppercase tracking-tight">{job.title}</h2>
+                                                        </Link>
                                                         <p className="text-primary-600 font-semibold">{job.company_name}</p>
                                                     </div>
                                                 </div>
