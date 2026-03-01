@@ -3,7 +3,7 @@ import api from '../api/axios';
 import {
     User, Mail, Phone, MapPin, Building, GraduationCap,
     Calendar, Save, Loader2, CheckCircle2, Plus, X,
-    Briefcase, Award, Globe, Linkedin, FileText, ChevronRight
+    Briefcase, Award, Linkedin, ExternalLink
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -227,6 +227,20 @@ const Profile = () => {
                                         onChange={handleChange}
                                         placeholder="linkedin.com/in/..."
                                     />
+                                    {profile.linkedin_url && (
+                                        <motion.a
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            href={profile.linkedin_url.startsWith('http') ? profile.linkedin_url : `https://${profile.linkedin_url}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-[#0077b5] hover:bg-[#006699] text-white rounded-xl font-bold text-sm transition-all shadow-md active:scale-[0.98] group"
+                                        >
+                                            <Linkedin className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                            <span>Visit Account</span>
+                                            <ExternalLink className="w-4 h-4 opacity-70" />
+                                        </motion.a>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -305,25 +319,6 @@ const Profile = () => {
                                 </div>
                             </section>
 
-                            {/* Security Area */}
-                            <section className="pt-10 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-8">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center">
-                                        <Globe className="w-5 h-5" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-black text-slate-900 leading-none">Security Protocol</p>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Last synced: {new Date().toLocaleDateString()}</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={handleSave}
-                                    type="button"
-                                    className="w-full md:w-auto px-10 py-4 bg-slate-900 text-white rounded-[1.5rem] font-black text-sm hover:bg-black transition-all shadow-xl hover:shadow-glow-dark"
-                                >
-                                    Initialize Secure Sync
-                                </button>
-                            </section>
                         </div>
                     </motion.div>
                 </div>

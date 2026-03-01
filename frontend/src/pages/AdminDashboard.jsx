@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import { Plus, Briefcase, Users, Eye, Edit, Trash2, Loader2, X, MapPin, DollarSign, Clock, GraduationCap, Phone, Mail, FileText, Building2, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Plus, Briefcase, Users, Eye, Edit, Trash2, Loader2, X, MapPin, DollarSign, Clock, GraduationCap, Phone, Mail, FileText, Building2, CheckCircle2, ArrowRight, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import InrLogo from '../assets/inr-logo.jpg';
 
 const AdminDashboard = () => {
+    const navigate = useNavigate();
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -168,7 +169,7 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div>
@@ -677,8 +678,7 @@ const AdminDashboard = () => {
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                setSelectedUser(app.user_id);
-                                                                setShowProfileModal(true);
+                                                                navigate(`/admin/user/${app.user_id?._id || app.user_id}`);
                                                             }}
                                                             className="text-[10px] font-bold text-primary-600 bg-primary-50 px-3 py-1 rounded-full hover:bg-primary-100"
                                                         >

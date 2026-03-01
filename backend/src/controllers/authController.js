@@ -188,6 +188,18 @@ exports.updateProfile = async (req, res) => {
         console.error('Update Profile Error:', error);
         res.status(500).json({ message: error.message });
     }
+};// @desc    Get user profile by ID (Admin only)
+// @route   GET /api/auth/user/:id
+// @access  Private/Admin
+exports.getUserProfileById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
-
-

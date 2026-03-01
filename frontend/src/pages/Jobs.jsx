@@ -124,7 +124,7 @@ const Jobs = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
             {/* Search Header */}
             <div className="mb-12">
                 <h1 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Find your dream job today</h1>

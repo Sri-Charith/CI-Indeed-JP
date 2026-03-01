@@ -10,6 +10,7 @@ import UserApplications from './pages/UserApplications';
 
 import Profile from './pages/Profile';
 import JobDetail from './pages/JobDetail';
+import AdminUserProfile from './pages/AdminUserProfile';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -40,6 +41,15 @@ function App() {
             element={
               <ProtectedRoute adminOnly={true}>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/user/:id"
+            element={
+              <ProtectedRoute adminOnly={true}>
+                <AdminUserProfile />
               </ProtectedRoute>
             }
           />

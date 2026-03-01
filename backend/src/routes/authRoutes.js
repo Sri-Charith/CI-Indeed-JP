@@ -5,6 +5,7 @@ const {
     loginUser,
     registerAdmin,
     loginAdmin,
+    getUserProfileById,
     getProfile,
     updateProfile
 } = require('../controllers/authController');
@@ -20,5 +21,6 @@ router.put('/user/profile', protect, updateProfile);
 // Admin Routes
 router.post('/admin/signup', registerAdmin);
 router.post('/admin/login', loginAdmin);
+router.get('/user/:id', protect, getUserProfileById);
 
 module.exports = router;

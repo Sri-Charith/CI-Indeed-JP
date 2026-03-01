@@ -30,7 +30,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled ? 'py-3' : 'py-6'}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled ? 'py-2' : 'py-4'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`glass px-6 rounded-2xl transition-all duration-500 ${isScrolled ? 'shadow-premium bg-white/90' : 'bg-white/40 border-transparent'}`}>
                     <div className="flex justify-between h-16 items-center">

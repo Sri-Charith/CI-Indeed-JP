@@ -18,7 +18,7 @@ import {
     Code2,
     Smartphone,
     Lightbulb,
-    Twitter,
+    X,
     Instagram,
     Youtube
 } from 'lucide-react';
@@ -79,9 +79,9 @@ const FeatureCard = ({ icon: Icon, title, desc, delay }) => (
 
 const Landing = () => {
     return (
-        <div className="overflow-x-hidden pt-16">
+        <div className="overflow-x-hidden pt-8 md:pt-12">
             {/* Hero Section */}
-            <section className="relative min-h-[85vh] flex items-center pt-20 pb-16 overflow-hidden">
+            <section className="relative min-h-[85vh] flex items-center pt-8 md:pt-10 pb-16 overflow-hidden">
                 {/* Glow effects pushed further back */}
                 <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary-200/20 rounded-full blur-[150px] z-[-1]"></div>
                 <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-accent-blue/10 rounded-full blur-[150px] z-[-1]"></div>
@@ -396,7 +396,7 @@ const Landing = () => {
                                     <li className="flex items-center group pt-4 border-t border-slate-50">
                                         <div className="flex space-x-4">
                                             <a href="https://x.com/centennialits" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center bg-white shadow-sm hover:shadow-md hover:text-primary-600 transition-all">
-                                                <Twitter className="w-4 h-4" />
+                                                <X className="w-4 h-4" />
                                             </a>
                                             <a href="https://www.instagram.com/cententialinfotech" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center bg-white shadow-sm hover:shadow-md hover:text-primary-600 transition-all">
                                                 <Instagram className="w-4 h-4" />
@@ -414,7 +414,7 @@ const Landing = () => {
                         <p>© 2026 Centennial Talent Solutions. Connecting talent to the future</p>
                         <div className="flex items-center space-x-6">
                             <a href="https://x.com/centennialits" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
-                                <Twitter className="w-5 h-5" />
+                                <X className="w-5 h-5" />
                             </a>
                             <a href="https://www.instagram.com/cententialinfotech" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
                                 <Instagram className="w-5 h-5" />
