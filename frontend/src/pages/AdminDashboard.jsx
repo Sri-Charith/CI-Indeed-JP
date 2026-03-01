@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import { Plus, Briefcase, Users, Eye, Edit, Trash2, Loader2, X, MapPin, DollarSign, Clock, GraduationCap, Phone, Mail, FileText, Building2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import InrLogo from '../assets/inr-logo.jpg';
 
 const AdminDashboard = () => {
     const [jobs, setJobs] = useState([]);
@@ -19,6 +20,9 @@ const AdminDashboard = () => {
         location_city: '',
         salary_min: '',
         salary_max: '',
+        currency: 'INR',
+        experience_required: '',
+        openings_count: 1,
         job_type: 'full-time',
         work_mode: 'onsite',
         status: 'open',
@@ -26,10 +30,19 @@ const AdminDashboard = () => {
     });
     const [editingJob, setEditingJob] = useState(null);
 
+    // Centralized currency display logic
+    const renderCurrencySymbol = (currencyCode, size = 'w-5 h-5') => {
+        const code = String(currencyCode || 'INR').trim().toUpperCase();
+        if (code === 'INR') {
+            return <img src={InrLogo} alt="INR" className={`${size} rounded-full object-cover border border-slate-100 flex-shrink-0`} />;
+        }
+        return <span className="text-slate-900 font-black">$</span>;
+    };
+
     const fetchAdminJobs = async () => {
         setLoading(true);
         try {
-            const { data } = await api.get('/jobs/admin/all');
+            const { data } = await api.get(`/jobs/admin/all?_cache_buster=${Date.now()}`);
             setJobs(data);
         } catch (err) {
             console.error('Failed to fetch admin jobs', err);
@@ -48,12 +61,17 @@ const AdminDashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Submitting Job Form Data:', formData);
         setFormLoading(true);
         try {
+            console.log('Final Form Data to Send:', formData);
             if (editingJob) {
+                console.log('UPDATING JOB:', editingJob._id, formData);
                 await api.put(`/jobs/${editingJob._id}`, formData);
+                alert('Job updated successfully!');
             } else {
                 await api.post('/jobs', formData);
+                alert('Job published successfully!');
             }
             setShowModal(false);
             setEditingJob(null);
@@ -68,6 +86,9 @@ const AdminDashboard = () => {
                 location_city: '',
                 salary_min: '',
                 salary_max: '',
+                currency: 'INR',
+                experience_required: '',
+                openings_count: 1,
                 job_type: 'full-time',
                 work_mode: 'onsite',
                 status: 'open',
@@ -86,12 +107,15 @@ const AdminDashboard = () => {
             job_id: job.job_id,
             title: job.title,
             description: job.description,
-            requirements: job.requirements || '',
-            responsibilities: job.responsibilities || '',
+            requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : (job.requirements || ''),
+            responsibilities: Array.isArray(job.responsibilities) ? job.responsibilities.join('\n') : (job.responsibilities || ''),
             company_name: job.company_name,
             location_city: job.location_city,
             salary_min: job.salary_min,
             salary_max: job.salary_max,
+            currency: job.currency || 'INR',
+            experience_required: job.experience_required || '',
+            openings_count: job.openings_count || 1,
             job_type: job.job_type,
             work_mode: job.work_mode,
             status: job.status,
@@ -162,6 +186,7 @@ const AdminDashboard = () => {
                             location_city: '',
                             salary_min: '',
                             salary_max: '',
+                            currency: 'INR',
                             job_type: 'full-time',
                             work_mode: 'onsite',
                             status: 'open',
@@ -217,6 +242,7 @@ const AdminDashboard = () => {
                             <thead>
                                 <tr className="bg-slate-50 border-b border-slate-100">
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Job Details</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Compensation</th>
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Type</th>
                                     <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-left">Posted On</th>
@@ -230,7 +256,16 @@ const AdminDashboard = () => {
                                             <Link to={`/jobs/${job._id}`} className="hover:text-primary-600 transition-colors">
                                                 <p className="font-bold text-slate-900">{job.title}</p>
                                             </Link>
-                                            <p className="text-sm text-slate-400">{job.job_id}</p>
+                                            <p className="text-sm text-slate-400">{job.job_id} • {job.role}</p>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            <div className="font-bold text-slate-900 flex items-center gap-1.5 justify-center md:justify-start">
+                                                {renderCurrencySymbol(job.currency)}
+                                                <span>{Number(job.salary_min / 1000 || 0).toLocaleString()}k</span>
+                                                <span className="text-slate-300 mx-0.5">-</span>
+                                                {renderCurrencySymbol(job.currency, 'w-4 h-4')}
+                                                <span>{Number(job.salary_max / 1000 || 0).toLocaleString()}k</span>
+                                            </div>
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${job.status === 'open' ? 'bg-green-100 text-green-600' :
@@ -424,53 +459,88 @@ const AdminDashboard = () => {
                                                         <option value="hybrid">Hybrid</option>
                                                     </select>
                                                 </div>
+                                                <div className="space-y-2">
+                                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Exp. Required (Yrs)</label>
+                                                    <input
+                                                        name="experience_required"
+                                                        value={formData.experience_required}
+                                                        type="number"
+                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 px-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900"
+                                                        placeholder="Years"
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Openings</label>
+                                                    <input
+                                                        name="openings_count"
+                                                        value={formData.openings_count}
+                                                        type="number"
+                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 px-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900"
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div className="space-y-6">
-                                            <div className="space-y-2">
-                                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Compensation Range ($)</label>
-                                                <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-4 pt-6 border-t border-slate-50">
+                                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 text-left">Annual Compensation Range</label>
+                                            <div className="flex gap-4">
+                                                <div className="w-24">
+                                                    <select
+                                                        name="currency"
+                                                        value={formData.currency}
+                                                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 px-3 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900 appearance-none"
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="INR">₹ INR</option>
+                                                        <option value="USD">$ USD</option>
+                                                    </select>
+                                                </div>
+                                                <div className="flex-1 grid grid-cols-2 gap-4">
                                                     <div className="relative group">
-                                                        <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4" />
+                                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+                                                            {renderCurrencySymbol(formData.currency, 'w-4 h-4')}
+                                                        </span>
                                                         <input
                                                             name="salary_min"
                                                             value={formData.salary_min}
                                                             type="number"
                                                             required
                                                             className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-10 pr-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900"
-                                                            placeholder="Min"
+                                                            placeholder="Min (e.g. 50000)"
                                                             onChange={handleChange}
                                                         />
                                                     </div>
                                                     <div className="relative group">
-                                                        <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4" />
+                                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+                                                            {renderCurrencySymbol(formData.currency, 'w-4 h-4')}
+                                                        </span>
                                                         <input
                                                             name="salary_max"
                                                             value={formData.salary_max}
                                                             type="number"
                                                             required
                                                             className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-10 pr-4 outline-none focus:border-primary-500 focus:bg-white transition-all duration-300 font-bold text-slate-900"
-                                                            placeholder="Max"
+                                                            placeholder="Max (e.g. 100000)"
                                                             onChange={handleChange}
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="space-y-2">
-                                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Status</label>
-                                                <div className="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
-                                                    {['open', 'closed', 'draft'].map((s) => (
-                                                        <button
-                                                            key={s}
-                                                            type="button"
-                                                            onClick={() => setFormData({ ...formData, status: s })}
-                                                            className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${formData.status === s ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                                                        >
-                                                            {s}
-                                                        </button>
-                                                    ))}
-                                                </div>
+                                        </div>
+                                        <div className="space-y-2 pt-6 border-t border-slate-50">
+                                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 text-left">Listing Status</label>
+                                            <div className="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                                                {['open', 'closed', 'draft'].map((s) => (
+                                                    <button
+                                                        key={s}
+                                                        type="button"
+                                                        onClick={() => setFormData({ ...formData, status: s })}
+                                                        className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${formData.status === s ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                                                    >
+                                                        {s}
+                                                    </button>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

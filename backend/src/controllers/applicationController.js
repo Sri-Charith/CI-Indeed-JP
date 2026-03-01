@@ -65,10 +65,7 @@ exports.applyToJob = async (req, res) => {
 exports.getMyApplications = async (req, res) => {
     try {
         const applications = await Application.find({ user_id: req.user._id })
-            .populate({
-                path: 'job_id',
-                select: 'title company_name location_city status'
-            })
+            .populate('job_id')
             .sort({ createdAt: -1 });
 
         res.json(applications);

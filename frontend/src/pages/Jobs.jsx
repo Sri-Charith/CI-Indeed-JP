@@ -3,10 +3,20 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
 import { Search, MapPin, Briefcase, DollarSign, Calendar, Filter, Loader2, ArrowRight, X, FileText, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import InrLogo from '../assets/inr-logo.jpg';
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Centralized currency display logic
+    const renderCurrencySymbol = (currencyCode, size = 'w-5 h-5') => {
+        const code = String(currencyCode || 'INR').trim().toUpperCase();
+        if (code === 'INR') {
+            return <img src={InrLogo} alt="INR" className={`${size} rounded-full inline-block object-cover border border-slate-100 flex-shrink-0`} />;
+        }
+        return <span className="text-slate-900 font-black">$</span>;
+    };
     const [keyword, setKeyword] = useState('');
     const [location, setLocation] = useState('');
     const [jobType, setJobType] = useState('');
@@ -41,7 +51,7 @@ const Jobs = () => {
             if (jobType) params.append('job_type', jobType);
             if (selectedRole) params.append('role', selectedRole);
 
-            const { data } = await api.get(`/jobs?${params.toString()}`);
+            const { data } = await api.get(`/jobs?${params.toString()}&_cb=${Date.now()}`);
             setJobs(data);
         } catch (err) {
             console.error('Failed to fetch jobs', err);
@@ -249,9 +259,16 @@ const Jobs = () => {
                                                     <MapPin className="w-4 h-4 mr-2 text-slate-400" />
                                                     {job.location_city}, {job.country}
                                                 </div>
-                                                <div className="flex items-center px-4 py-2 bg-slate-50 rounded-lg">
-                                                    <DollarSign className="w-4 h-4 mr-2 text-slate-400" />
-                                                    {job.salary_min / 1000}k - {job.salary_max / 1000}k
+                                                <div className="flex items-center px-4 py-2 bg-slate-50 rounded-lg gap-2">
+                                                    {renderCurrencySymbol(job.currency)}
+                                                    <span className="font-bold text-slate-700">
+                                                        {Number(job.salary_min / 1000 || 0).toLocaleString()}k
+                                                    </span>
+                                                    <span className="text-slate-300">-</span>
+                                                    {renderCurrencySymbol(job.currency, 'w-4 h-4')}
+                                                    <span className="font-bold text-slate-700">
+                                                        {Number(job.salary_max / 1000 || 0).toLocaleString()}k
+                                                    </span>
                                                 </div>
                                                 <div className="flex items-center px-4 py-2 bg-slate-50 rounded-lg capitalize">
                                                     <Briefcase className="w-4 h-4 mr-2 text-slate-400" />

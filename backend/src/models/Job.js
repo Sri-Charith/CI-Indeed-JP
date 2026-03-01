@@ -17,6 +17,12 @@ const jobSchema = new mongoose.Schema({
     responsibilities: [String],
     salary_min: Number,
     salary_max: Number,
+    currency: {
+        type: String,
+        enum: ['USD', 'INR'],
+        default: 'INR',
+        required: true
+    },
     experience_required: Number,
     job_type: {
         type: String,

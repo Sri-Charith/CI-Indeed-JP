@@ -5,6 +5,7 @@ import {
     MapPin,
     Briefcase,
     DollarSign,
+    IndianRupee,
     Calendar,
     Loader2,
     ArrowLeft,
@@ -17,11 +18,22 @@ import {
     Send,
     X,
     FileText,
-    Zap
+    Zap,
+    GraduationCap,
+    Briefcase as BriefcaseIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import InrLogo from '../assets/inr-logo.jpg';
 
 const JobDetail = () => {
+    // Centralized currency display logic
+    const renderCurrencySymbol = (currencyCode, size = 'w-5 h-5') => {
+        const code = String(currencyCode || 'INR').trim().toUpperCase();
+        if (code === 'INR') {
+            return <img src={InrLogo} alt="INR" className={`${size} rounded-full inline-block object-cover border border-slate-100 flex-shrink-0`} />;
+        }
+        return <span className="text-slate-900 font-black">$</span>;
+    };
     const { id } = useParams();
     const navigate = useNavigate();
     const [job, setJob] = useState(null);
@@ -49,7 +61,7 @@ const JobDetail = () => {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const { data } = await api.get(`/jobs/${id}`);
+                const { data } = await api.get(`/jobs/${id}?_t=${Date.now()}`);
                 setJob(data);
             } catch (err) {
                 setError(err.response?.data?.message || 'Failed to fetch job details');
@@ -271,13 +283,17 @@ const JobDetail = () => {
                             <div className="space-y-8">
                                 <div className="flex items-start gap-4">
                                     <div className="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                                        <DollarSign className="w-6 h-6" />
+                                        {renderCurrencySymbol(job.currency, 'w-8 h-8')}
                                     </div>
                                     <div>
                                         <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-1 text-left">Annual Compensation</p>
-                                        <p className="text-2xl font-black text-slate-900">
-                                            ${(job.salary_min / 1000).toFixed(0)}k - ${(job.salary_max / 1000).toFixed(0)}k
-                                        </p>
+                                        <div className="text-2xl font-black text-slate-900 flex items-center gap-2">
+                                            {renderCurrencySymbol(job.currency, 'w-6 h-6')}
+                                            <span>{Number(job.salary_min || 0).toLocaleString()}</span>
+                                            <span className="text-slate-200">-</span>
+                                            {renderCurrencySymbol(job.currency, 'w-5 h-5')}
+                                            <span>{Number(job.salary_max || 0).toLocaleString()}</span>
+                                        </div>
                                     </div>
                                 </div>
 

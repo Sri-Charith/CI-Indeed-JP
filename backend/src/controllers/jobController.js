@@ -9,11 +9,20 @@ exports.createJob = async (req, res) => {
     try {
         const {
             job_id, title, role, company_id, company_name, description,
-            requirements, responsibilities, salary_min, salary_max,
+            requirements, responsibilities, salary_min, salary_max, currency,
             experience_required, job_type, work_mode, location_city,
             location_state, country, openings_count, application_deadline,
             status, skills_required
         } = req.body;
+
+        // Handle arrays (split strings if they come from textarea)
+        const parseArray = (input) => {
+            if (Array.isArray(input)) return input;
+            if (typeof input === 'string') {
+                return input.split('\n').map(s => s.trim()).filter(s => s !== '');
+            }
+            return [];
+        };
 
         const job = await Job.create({
             job_id,
@@ -23,10 +32,11 @@ exports.createJob = async (req, res) => {
             company_name,
             posted_by_admin_id: req.user._id, // From auth middleware
             description,
-            requirements,
-            responsibilities,
+            requirements: parseArray(requirements),
+            responsibilities: parseArray(responsibilities),
             salary_min,
             salary_max,
+            currency,
             experience_required,
             job_type,
             work_mode,
@@ -105,14 +115,36 @@ exports.updateJob = async (req, res) => {
         const job = await Job.findById(req.params.id);
 
         if (job) {
-            // Ensure only the admin who posted it or super admin can update (optional check)
-            // For now, any admin can update any job
+            console.log('Update Request Body:', JSON.stringify(req.body, null, 2));
+
+            // Handle arrays (split strings if they come from textarea)
+            const parseArray = (input) => {
+                if (Array.isArray(input)) return input;
+                if (typeof input === 'string') {
+                    return input.split('\n').map(s => s.trim()).filter(s => s !== '');
+                }
+                return [];
+            };
+
+            const updateData = {
+                ...req.body,
+                requirements: parseArray(req.body.requirements),
+                responsibilities: parseArray(req.body.responsibilities),
+                // Explicitly sanitize and fallback to existing only if truly missing
+                currency: (req.body.currency && typeof req.body.currency === 'string')
+                    ? req.body.currency.trim().toUpperCase()
+                    : (job.currency || 'INR')
+            };
+
+            console.log('Computed Update Data:', JSON.stringify(updateData, null, 2));
 
             const updatedJob = await Job.findByIdAndUpdate(
                 req.params.id,
-                req.body,
-                { new: true }
+                updateData,
+                { new: true, runValidators: true }
             );
+
+            console.log('Job Updated Successfully:', updatedJob._id);
             res.json(updatedJob);
         } else {
             res.status(404).json({ message: 'Job not found' });
